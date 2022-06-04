@@ -1,5 +1,5 @@
 <!--
-* 버튼 누르는 기능이 
+* 버튼 누르는 기능이
 - js에서는 onclick=""
 - vue 에서는 @click=""
 
@@ -17,8 +17,8 @@
   <q-page class="q-pa-md">
     <q-list bordered>
       <q-item
-        v-for="task in tasks"
-        v-bind:key="task.id"
+        v-for="(task, taskKey) in tasks"
+        :key="taskKey"
         @click="task.completed = !task.completed"
         v-bind:class="!task.completed ? 'bg-orange-1' : 'bg-green-1'"
         clickable
@@ -29,9 +29,8 @@
         </q-item-section>
 
         <q-item-section>
-          <q-item-label :class="{ 'text-strikethrough': task.completed }">{{
-            task.name
-          }}</q-item-label>
+          <q-item-label :class="{ 'text-strikethrough': task.completed }">
+          {{ task.name }} {{ taskKey }}</q-item-label>
         </q-item-section>
 
         <q-item-section side top>
@@ -56,34 +55,14 @@
 
 <script>
 import { defineComponent } from "vue";
+import { useTasksStore } from "stores/tasks.js"
+
 export default defineComponent({
-  data() {
-    return {
-      tasks: [
-        {
-          id: 1,
-          name: "Go to shop",
-          completed: false,
-          dueDate: "2022/05/31",
-          dueTime: "18:43",
-        },
-        {
-          id: 2,
-          name: "Get bananas",
-          completed: false,
-          dueDate: "2022/06/04",
-          dueTime: "08:03",
-        },
-        {
-          id: 3,
-          name: "Eat apples",
-          completed: false,
-          dueDate: "2022/05/14",
-          dueTime: "21:03",
-        },
-      ],
-    };
-  },
+  computed: {
+    tasks() {
+      return useTasksStore().tasks;
+    }
+  }
 });
 </script>
 
