@@ -1,24 +1,40 @@
+<!-- 
+* 툴바 속성 변경
+* footer 추가
+* scsss 스타일 추가
+   : .q-drawer 의 설정이 어떤 때에 적용되는지 확인 안됨;;
+-->
+
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="hHh lpR fFf">
     <q-header elevated>
-      <q-toolbar class="bg-accent text-secondary">
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
-
-        <q-toolbar-title> Quasar App </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
+      <q-toolbar>
+        <q-toolbar-title class="absolute-center">
+          Awesome Todo
+        </q-toolbar-title>
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
-      <q-list>
+    <q-footer elevated>
+      <q-tabs no-caps>
+        <q-route-tab to="/" name="todo" icon="list" label="Todo" />
+        <q-route-tab
+          to="/settings"
+          name="settings"
+          icon="settings"
+          label="Settings"
+        />
+      </q-tabs>
+    </q-footer>
+
+    <q-drawer
+      class="bg-primary text-white"
+      v-model="leftDrawerOpen"
+      :breakpoint="200"
+      :width="250"
+      bordered
+    >
+      <q-list dark class="bg-primary text-white">
         <q-item-label header> Navigation </q-item-label>
 
         <EssentialLink
@@ -60,15 +76,23 @@ export default defineComponent({
   },
 
   setup() {
-    const leftDrawerOpen = ref(false);
+    const leftDrawerOpen = ref(true);
 
     return {
       essentialLinks: linksList,
       leftDrawerOpen,
-      toggleLeftDrawer() {
-        leftDrawerOpen.value = !leftDrawerOpen.value;
-      },
     };
   },
 });
 </script>
+
+<style lang="scss">
+.q-footer {
+  display: none;
+}
+.q-drawer {
+  .q-router-link--exact-active {
+    color: white !important;
+  }
+}
+</style>
