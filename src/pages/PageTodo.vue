@@ -1,23 +1,24 @@
-<!--
-* 버튼 누르는 기능이
-- js에서는 onclick=""
-- vue 에서는 @click=""
-
-* 디렉티브
-- 'v-' 접두어가 있는 특수한 속성
-- 디렉티브의 속성 값이 변경될 때 DOM과 바인딩하여 DOM을 변경하는 역할
-- ex) v-bind, v-on 등등
-- 콜론 (:) 을 사용하여 전달인자 사용
-- 자주 사용되는 v-bind와 v-on은 생략가능
-- ex) :key 은 v-bind:key 과 같음
--->
->
-
-<template>
+₩<template>
   <q-page class="q-pa-md">
     <q-list separator bordered>
       <task v-for="(task, key) in tasks" :key="key" :task="task"> </task>
     </q-list>
+
+    <div class="absolute-bottom text-center">
+
+    <q-btn
+    @click="showAddTask = true"
+    round
+    color="primary"
+    size="24px"
+    icon="add"
+    />
+    </div>
+
+    <q-dialog v-model="showAddTask">
+<add_task />
+    </q-dialog>
+
   </q-page>
 </template>
 
@@ -25,8 +26,15 @@
 import { defineComponent } from "vue";
 import { useTasksStore } from "stores/tasks.js";
 import task from "components/MyTasks.vue";
+import add_task from "components/AddTask.vue";
+
 
 export default defineComponent({
+  data() {
+return {
+  showAddTask: false
+}
+  },
   computed: {
     tasks() {
       return useTasksStore().getAllTask;
@@ -35,6 +43,7 @@ export default defineComponent({
 
   components: {
     task,
+    add_task,
   },
 });
 </script>
