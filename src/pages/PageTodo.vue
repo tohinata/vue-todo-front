@@ -15,54 +15,28 @@
 
 <template>
   <q-page class="q-pa-md">
-    <q-list bordered>
-      <q-item
-        v-for="(task, taskKey) in tasks"
-        :key="taskKey"
-        @click="task.completed = !task.completed"
-        v-bind:class="!task.completed ? 'bg-orange-1' : 'bg-green-1'"
-        clickable
-        v-ripple
-      >
-        <q-item-section side top>
-          <q-checkbox v-model="task.completed" />
-        </q-item-section>
-
-        <q-item-section>
-          <q-item-label :class="{ 'text-strikethrough': task.completed }">
-          {{ task.name }} {{ taskKey }}</q-item-label>
-        </q-item-section>
-
-        <q-item-section side top>
-          <div class="row">
-            <div class="column justify-center">
-              <q-icon name="event" size="18px" class="q-mr-xs" />
-            </div>
-            <div class="column">
-              <q-item-label class="row justify-end" caption>
-                {{ task.dueDate }}</q-item-label
-              >
-              <q-item-label class="row justify-end" caption>
-                {{ task.dueTime }}</q-item-label
-              >
-            </div>
-          </div>
-        </q-item-section>
-      </q-item>
+    <q-list separator bordered>
+      <task v-for="(task, key) in tasks" :key="key" :task="task"> </task>
     </q-list>
   </q-page>
 </template>
 
 <script>
 import { defineComponent } from "vue";
-import { useTasksStore } from "stores/tasks.js"
+import { useTasksStore } from "stores/tasks.js";
+import task from "components/MyTasks.vue";
 
 export default defineComponent({
   computed: {
     tasks() {
       return useTasksStore().tasks;
-    }
-  }
+    },
+  },
+
+  components: {
+    // eslint-disable-next-line
+    task,
+  },
 });
 </script>
 
