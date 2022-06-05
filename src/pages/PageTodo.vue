@@ -29,12 +29,11 @@ import task from "components/MyTasks.vue";
 export default defineComponent({
   computed: {
     tasks() {
-      return useTasksStore().tasks;
+      return useTasksStore().getAllTask;
     },
   },
 
   components: {
-    // eslint-disable-next-line
     task,
   },
 });
