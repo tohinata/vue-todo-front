@@ -32,21 +32,41 @@
     </q-item-section>
 
     <q-item-section side>
-      <q-btn
-        @click.stop="promptToDeleted(id)"
-        flat
-        round
-        color="red"
-        icon="delete"
-      />
+      <div class="row">
+        <q-btn
+          @click.stop="showEditTask = true"
+          flat
+          round
+          color="primary"
+          icon="edit"
+        />
+
+        <q-btn
+          @click.stop="promptToDeleted(id)"
+          flat
+          round
+          color="red"
+          icon="delete"
+        />
+      </div>
     </q-item-section>
+    <q-dialog v-model="showEditTask">
+      <edit_task @close="showEditTask = faslse" />
+    </q-dialog>
   </q-item>
 </template>
 
 <script>
 import { useTasksStore } from "stores/tasks.js";
+import edit_task from "./EditTask.vue";
 
 export default {
+  components: { edit_task },
+  data() {
+    return {
+      showEditTask: false,
+    };
+  },
   methods: {
     setComplete() {
       useTasksStore().updateTask();

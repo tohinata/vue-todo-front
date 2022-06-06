@@ -1,6 +1,6 @@
 <template>
   <q-card>
-    <modal_header>Add Task</modal_header>
+    <modal_header>Edit Task</modal_header>
 
     <form @submit.prevent="submitForm">
       <q-card-section class="q-pt-none">
